@@ -17,6 +17,10 @@ releases_to_purge.pop()
 
 releases_to_purge = ['v' + r for r in releases_to_purge]
 
+if len(releases_to_purge) == 0:
+    print('No releases to purge.')
+    exit(1)
+
 print('Releases to purge:')
 for r in releases_to_purge:
     print('  ' + r)
