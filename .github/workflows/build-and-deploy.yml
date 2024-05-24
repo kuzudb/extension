@@ -11,7 +11,7 @@ jobs:
     name: Build and push Docker image
     runs-on: ubuntu-latest
     steps:
-      - name: Free disk space on Ubuntu runner 🔧
+      - name: Free disk space on Ubuntu runner
         uses: kfir4444/free-disk-space@main
         with:
           tool-cache: false
