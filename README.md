@@ -1,0 +1,2 @@
+# extension
+kuzudb extension repo
