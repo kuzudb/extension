@@ -1,0 +1,41 @@
+name: Purge-Beta-Versions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  purge-beta-versions:
+    name: Purge beta versions (other than latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DOC_PUSH_TOKEN }}
+
+      - name: Install dependencies
+        run: pip3 install packaging
+
+      - name: Purge beta versions
+        run: |
+          python3 scripts/purge-beta.py
+
+      - name: Show current releases
+        run: |
+          ls -al releases
+
+      - name: Commit
+        run: |
+          git config --global user.email "contact@kuzudb.com"
+          git config --global user.name "CI bot"
+          git checkout --orphan latest_branch
+          git add -A
+          git commit -m "Purge previous beta versions"
+          git branch -D main
+          git branch -m main
+
+      - name: Push
+        run: |
+          echo "Sleeping for 20 seconds, if you want to cancel, do it now!"
+          sleep 20
+          git push -f origin main
